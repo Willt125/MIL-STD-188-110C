@@ -7,7 +7,7 @@ PreambleGenerate() + Input string -> EncodeInputData() -> FECEncodeBits() -> Int
 All you have to do is:
 open a shell in the file directory
 ```py
-import MIL-STD-188-110A
+import MIL-STD-188-110C
 instring = "Hello, World!"
 outsound = main(instring, 75, "L", "Data", "fixed", 1)
 wavfile.write("/dir/here/filename.wav", 384000, outsound)
