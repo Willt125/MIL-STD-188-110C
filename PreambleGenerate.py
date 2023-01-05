@@ -38,7 +38,6 @@ def PreambleGenerate(bps: int, interleave_len: str, dtype: str = "Data") -> np.n
 	   and scrambled using `PreambleRandomizerSeq` and returned.
 	   This is an internal function. Do not call this directly."""
 
-	data_array = np.array([])
 	if interleave_len == "Z" or interleave_len == "S":
 
 		counts = range(2, -1, -1)
@@ -49,7 +48,7 @@ def PreambleGenerate(bps: int, interleave_len: str, dtype: str = "Data") -> np.n
                    [0]
                    for count in counts]
 		
-		data_array = np.append(data_array, preamble_frames)
+		data_array = np.array(preamble_frames, dtype=int).flatten()
 
 		"""for count in range(2, -1, -1):
 			data_array = np.append(data_array, [0, 1, 3, 0, 1, 3, 1, 2, 0])
@@ -77,7 +76,7 @@ def PreambleGenerate(bps: int, interleave_len: str, dtype: str = "Data") -> np.n
                    [0]
                    for count in counts]
 		
-		data_array = np.append(data_array, preamble_frames)
+		data_array = np.array(preamble_frames, dtype=int).flatten
 
 		"""for count in range(23, -1, -1):
 			data_array = np.append(data_array, [0, 1, 3, 0, 1, 3, 1, 2, 0])
@@ -117,6 +116,6 @@ def PreambleGenerate(bps: int, interleave_len: str, dtype: str = "Data") -> np.n
 			case 7:
 				data_out = np.append(data_out, [0,4,4,0,4,0,0,4] * 4)
 	
-	data_out = np.array([(data_out[i] + x) % 8 for i, x in enumerate(PreambleRandomizerSeq)])
+	data_out = np.array([(x + PreambleRandomizerSeq[i % len(PreambleRandomizerSeq)]) % 8 for i, x in enumerate(data_out)])
 	
 	return data_out
