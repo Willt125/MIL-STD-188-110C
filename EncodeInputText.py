@@ -16,7 +16,7 @@ def InputDataToBinaryStream(input_string, interleave_length: int = 90, EOMCycles
         This module should not be called by the user."""
         
         # Here we split the input string into individual characters
-        asciichars = bytearray([bin(ord(char))[2:].zfill(8) for i, char in enumerate(input_string)])
+        asciichars = [bin(ord(char))[2:].zfill(8) for char in input_string]
         
         # And then we split each character into individual bits
         input_bits = []
