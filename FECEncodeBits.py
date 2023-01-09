@@ -30,28 +30,31 @@ def FECEncodeBits(inArray,Bd,fqmode='fixed'):
 
                 for bit in inArray:
                         fec_buffer[0] = bit
+                        bit1 = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6] # The error correction is just a simple convolution.
+                        bit2 = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6] # There is probably a more efficient way to do this.
+                                        
                         match Bd:
                                 case 150:
-                                        fec_out[x] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]   # The error correction is just a simple convolution.
-                                        fec_out[x+1] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6] # There is probably a more efficient way to do this.
-                                        fec_out[x+2] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+3] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+4] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+5] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+6] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+7] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
+                                        fec_out[x] = bit1
+                                        fec_out[x+1] = bit2
+                                        fec_out[x+2] = bit1
+                                        fec_out[x+3] = bit2
+                                        fec_out[x+4] = bit1
+                                        fec_out[x+5] = bit2
+                                        fec_out[x+6] = bit1
+                                        fec_out[x+7] = bit2
                                         x += 8
                                         pass
                                 case 300:
-                                        fec_out[x] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+1] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+2] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+3] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
+                                        fec_out[x] = bit1
+                                        fec_out[x+1] = bit2
+                                        fec_out[x+2] = bit1
+                                        fec_out[x+3] = bit2
                                         x += 4
                                         pass
                                 case 600 or 1200 or 2400 or 75:
-                                        fec_out[x] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+1] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
+                                        fec_out[x] = bit1
+                                        fec_out[x+1] = bit2
                                         x += 2
                         fec_buffer[5] = fec_buffer[4]
                         fec_buffer[4] = fec_buffer[3]
@@ -83,53 +86,55 @@ def FECEncodeBits(inArray,Bd,fqmode='fixed'):
 
                 for bit in inArray:
                         fec_buffer[0] = bit
+                        bit1 = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
+                        bit2 = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
                         match Bd:
                                 case 75:
-                                        fec_out[x] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+1] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+2] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+3] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+4] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+5] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+6] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+7] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+8] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+9] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+10] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+11] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+12] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+13] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+14] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+15] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]                                
+                                        fec_out[x] = bit1
+                                        fec_out[x+1] = bit2
+                                        fec_out[x+2] = bit1
+                                        fec_out[x+3] = bit2
+                                        fec_out[x+4] = bit1
+                                        fec_out[x+5] = bit2
+                                        fec_out[x+6] = bit1
+                                        fec_out[x+7] = bit2
+                                        fec_out[x+8] = bit1
+                                        fec_out[x+9] = bit2
+                                        fec_out[x+10] = bit1
+                                        fec_out[x+11] = bit2
+                                        fec_out[x+12] = bit1
+                                        fec_out[x+13] = bit2
+                                        fec_out[x+14] = bit1
+                                        fec_out[x+15] = bit2
                                         x += 16
                                         pass
                                 case 150:
-                                        fec_out[x] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+1] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+2] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+3] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+4] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+5] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+6] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+7] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
+                                        fec_out[x] = bit1
+                                        fec_out[x+1] = bit2
+                                        fec_out[x+2] = bit1
+                                        fec_out[x+3] = bit2
+                                        fec_out[x+4] = bit1
+                                        fec_out[x+5] = bit2
+                                        fec_out[x+6] = bit1
+                                        fec_out[x+7] = bit2
                                         x += 8
                                         pass
                                 case 300:
-                                        fec_out[x] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+1] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+2] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+3] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
+                                        fec_out[x] = bit1
+                                        fec_out[x+1] = bit2
+                                        fec_out[x+2] = bit1
+                                        fec_out[x+3] = bit2
                                         x += 4
                                         pass
                                 case 600 or 1200:
-                                        fec_out[x] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+1] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
+                                        fec_out[x] = bit1
+                                        fec_out[x+1] = bit2
                                         x += 2
                                         pass
                                 case 2400:
-                                        fec_out[x] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
-                                        fec_out[x+1] = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6]
-                                        fec_out[x+2] = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6]
+                                        fec_out[x] = bit1
+                                        fec_out[x+1] = bit2
+                                        fec_out[x+2] = bit1
                                         x += 3
                         fec_buffer[5] = fec_buffer[4]
                         fec_buffer[4] = fec_buffer[3]
