@@ -1,6 +1,6 @@
 import numpy as np
 
-def FECEncodeBits(inArray,Bd,fqmode='fixed'):
+def FECEncodeBits(inArray: np.array[int], Bd: int, fqmode: str ='fixed') -> np.array[int]:
 	"""Returns a (much longer) FEC-encoded bit array from an input bit array
 	   `inArray` is the input bitstream
 	   `Bd` is the selected baud
