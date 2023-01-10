@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 # The repeat factors define how many times to repeat the output of the FEC buffer into the output bitstream.
 # Defined in MIL-STD-188-110, page 26 & 28 (32 & 24 in the PDF)
@@ -45,7 +46,7 @@ def FECEncodeBits(inArray: np.array[int], Bd: int, fqmode: str ='fixed') -> np.a
                         bit1 = fec_buffer[0] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[5] ^ fec_buffer[6] # The error correction is just a simple convolution.
                         bit2 = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6] # There is probably a more efficient way to do this.
                                         
-                        fec_out[x:x+fixed_repeat_factor[Bd]] = [bit1, bit2]*fixed_repeat_factor[Bd] # load the output array with the current batch
+                        fec_out[x:] = [bit1, bit2] * math.floor(fixed_repeat_factor[Bd] / 2) # load the output array with the current batch.
                         x += fixed_repeat_factor[Bd] # and shift the output pointer
                         
 
@@ -66,7 +67,7 @@ def FECEncodeBits(inArray: np.array[int], Bd: int, fqmode: str ='fixed') -> np.a
                         bit2 = fec_buffer[0] ^ fec_buffer[1] ^ fec_buffer[2] ^ fec_buffer[3] ^ fec_buffer[6] # There is probably a more efficient way to do this.
 
                         if Bd != 2400:
-                                fec_out[x:x+hopping_repeat_factor[Bd]] = [bit1, bit2]*hopping_repeat_factor[Bd]
+                                fec_out[x:] = [bit1, bit2]*math.floor(hopping_repeat_factor[Bd] / 2)
                                 x += hopping_repeat_factor[Bd]
                         else:
                                 fec_out[x:x+3] = [bit1, bit2, bit1] # 2400-baud hopping mode needs a special case due to bit puncturing
