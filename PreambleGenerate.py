@@ -50,23 +50,6 @@ def PreambleGenerate(bps: int, interleave_len: str, dtype: str = "Data") -> np.n
 		
 		data_array = np.array(preamble_frames, dtype=int).flatten()
 
-		"""for count in range(2, -1, -1):
-			data_array = np.append(data_array, [0, 1, 3, 0, 1, 3, 1, 2, 0])
-			
-			data_array = np.append(data_array, bps_to_3bit[bps])
-			if dtyp == "Voice":
-				data_array[-2:0] = [7, 7]
-
-			temp = bin(count)[2:].zfill(6)
-			C1 = temp[:2]
-			C2 = temp[2:4]
-			C3 = temp[4:]
-
-			C1 = bin_to_int[C1]
-			C2 = bin_to_int[C2]
-			C3 = bin_to_int[C3]
-
-			data_array = np.append(data_array, [C1, C2, C3, 0])"""
 	else:
 		counts = range(23, -1, -1)
 
@@ -77,24 +60,6 @@ def PreambleGenerate(bps: int, interleave_len: str, dtype: str = "Data") -> np.n
                    for count in counts]
 		
 		data_array = np.array(preamble_frames, dtype=int).flatten
-
-		"""for count in range(23, -1, -1):
-			data_array = np.append(data_array, [0, 1, 3, 0, 1, 3, 1, 2, 0])
-			
-			data_array = np.append(data_array, bps_to_3bit[bps])
-			if dtyp == "Voice":
-				data_array[-2:0] = [7, 7]
-
-			temp = bin(count)[2:].zfill(6)
-			C1 = temp[:2]
-			C2 = temp[2:4]
-			C3 = temp[4:]
-
-			C1 = bin_to_int[C1]
-			C2 = bin_to_int[C2]
-			C3 = bin_to_int[C3]
-
-			data_array = np.append(data_array, [C1, C2, C3, 0])"""
 
 	data_out = np.array([], dtype=int)
 	for i in range(len(data_array)):
