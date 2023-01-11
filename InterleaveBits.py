@@ -27,7 +27,6 @@ def InterleaveChunk(inchunk, numrows, numcols, rowInc,colDec):
 	i = 0
 	rownum = 0
 	colnum = 0
-	del count
 
 	while i < numrows * numcols:
 		lastcolnum = colnum
@@ -50,62 +49,61 @@ def InterleaveData(indata, Bd=75, interleave_len="S", frqmode="fixed"):
 	# The conbination of these and frqmode (not supported) selects the
 	# interleave length.
 	
-        if interleave_len == "Z":
-                return indata
-        elif Bd == 75 and interleave_len == "S" and frqmode == "fixed":
-                numrows = 10
-                numcols = 9
-                rowInc = 7
-                colDec = 7
-        elif Bd == 75 and interleave_len == "L" and frqmode == "fixed":
-                numrows = 20
-                numcols = 36
-                rowInc = 7
-                colDec = 7
-        elif Bd == 75 and interleave_len == "S" and frqmode == "hopping":
-                numrows = 40
-                numcols = 18
-                rowInc = 9
-                colDec = 17
-        elif Bd == 75 and interleave_len == "L" and frqmode == "hopping":
-                numrows = 40
-                numcols = 144
-                rowInc = 9
-                colDec = 17
-        elif (Bd == 150 or Bd == 300 or Bd == 600) and interleave_len == "S":
-                numrows = 40
-                numcols = 18
-                rowInc = 9
-                colDec = 17
-        elif (Bd == 150 or Bd == 300 or Bd == 600) and interleave_len == "L":
-                numrows = 40
-                numcols = 144
-                rowInc = 9
-                colDec = 17
-        elif Bd == 1200 and interleave_len == "S":
-                numrows = 40
-                numcols = 36
-                rowInc = 9
-                colDec = 17
-        elif Bd == 1200 and interleave_len == "L":
-                numrows = 40
-                numcols = 288
-                rowInc = 9
-                colDec = 17
-        elif Bd == 2400 and interleave_len == "S":
-                numrows = 40
-                numcols = 72
-                rowInc = 9
-                colDec = 17
-        elif Bd == 2400 and interleave_len == "L":
-                numrows = 40
-                numcols = 576
-                rowInc = 9
-                colDec = 17
-        elif Bd == 4800:
-                return indata
-        else:
-                raise RuntimeError("Invalid input.")
+        match (interleave_len, Bd, frqmode):
+                case ("Z", _, _):
+                        return indata
+                case ("S", 75, "fixed"):
+                        numrows = 10
+                        numcols = 9
+                        rowInc = 7
+                        colDec = 7
+                case ("S", 75, "hopping"):
+                        numrows = 40
+                        numcols = 18
+                        rowInc = 9
+                        colDec = 17
+                case ("S", 1200, _):
+                        numrows = 40
+                        numcols = 36
+                        rowInc = 9
+                        colDec = 17
+                case ("S", 2400, _):
+                        numrows = 40
+                        numcols = 72
+                        rowInc = 9
+                        colDec = 17
+                case ("L", 75, "fixed"):
+                        numrows = 20
+                        numcols = 36
+                        rowInc = 7
+                        colDec = 7
+                case ("L", 75, "hopping"):
+                        numrows = 40
+                        numcols = 144
+                        rowInc = 9
+                        colDec = 17
+                case ("L", 1200, _):
+                        numrows = 40
+                        numcols = 288
+                        rowInc = 9
+                        colDec = 17
+                case ("L", 2400, _):
+                        numrows = 40
+                        numcols = 576
+                        rowInc = 9
+                        colDec = 17
+                case (_, 4800, _):
+                        return indata
+                case ("S", _, _):
+                        numrows = 40
+                        numcols = 18
+                        rowInc = 9
+                        colDec = 17
+                case ("L", _, _):
+                        numrows = 40
+                        numcols = 144
+                        rowInc = 9
+                        colDec = 17
 	
         z = numrows * numcols
 
