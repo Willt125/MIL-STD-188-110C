@@ -53,11 +53,11 @@ bps75_fixed_constellation_map_exceptional = {
     3: [0, 4, 4, 0, 4, 0, 0, 4] * 4
 }
 
-
 bps150_600_constellation_map = {
     0: 0,
     1: 4
 }
+
 
 bps1200_constellation_map = {
     0: 0,
@@ -65,6 +65,7 @@ bps1200_constellation_map = {
     2: 4,
     3: 6
 }
+
 
 def channelMapChunk(indata: np.ndarray, Bd: int = 75, interleave_length: str = "S", freq_mode: str = "Fixed") -> np.ndarray:
     """Map the input symbols to their final forms. We're almost done, woohoo!
