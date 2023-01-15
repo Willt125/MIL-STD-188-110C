@@ -18,28 +18,30 @@ dibit_mgd_map = {
     3: 2
 }
 
-def MGD_Decode(indata: np.array[int], Bd: int, frqmode: str) -> np.array[int]:
+
+def MGD_Decode(indata: np.ndarray, Bd: int = 75, frqmode: str = "fixed") -> np.ndarray:
     # Convert the input bitgroups to their Gray form, so that
     # receive errors only result in one bit in err.
-    
+
     if ((Bd == 75 and frqmode == 'fixed') or Bd == 1200):
-        grouped = np.zeros([indata.shape[0]//2,],dtype=int)
-        for i in range(0,len(indata),2):
+        grouped = np.zeros([indata.shape[0]//2,], dtype=int)
+        for i in range(0, len(indata), 2):
             grouped[i//2] = int(str(indata[i]) + str(indata[i+1]), base=2)
-        out = np.zeros(grouped.shape,dtype=int)
-        for el in grouped:
+        out = np.zeros(grouped.shape, dtype=int)
+        for i, el in  enumerate(grouped):
             out[i] = dibit_mgd_map[el]
         return out
-    
+
     elif (Bd == 150 or Bd == 300 or Bd == 600 or (Bd == 75 and frqmode == 'hopping')):
         return indata
-    
+
     elif (Bd == 2400 or Bd == 4800):
-        grouped = np.zeros([indata.shape[0]//3,],dtype=int)
-        for i in range(0,len(indata),3):
-            grouped[i//3] = int(str(indata[i]) + str(indata[i+1]) + str(indata[i+2]), base=2)
-        out = np.zeros(grouped.shape,dtype=int)
-        for el in grouped:
+        grouped = np.zeros([indata.shape[0]//3,], dtype=int)
+        for i in range(0, len(indata), 3):
+            grouped[i//3] = int(str(indata[i]) +
+                                str(indata[i+1]) + str(indata[i+2]), base=2)
+        out = np.zeros(grouped.shape, dtype=int)
+        for i, el in enumerate(grouped):
             out[i] = tribit_mgd_map[el]
         return out
     else:
