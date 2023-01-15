@@ -4,9 +4,9 @@ import numpy as np
 import scipy.io.wavfile as wavfile
 from scipy.signal import butter, lfilter
 from PreambleGenerate import PreambleGenerate
-from EncodeInputText import InputDataToBinaryStream
+from InputDataToBinaryStream import InputDataToBinaryStream
 from FECEncodeBits import FECEncodeBits
-from InterleaveBits import InterleaveData
+from InterleaveData import InterleaveData
 from MGDDecode import MGD_Decode
 from channelMap import channelMap
 from ScrambleBits import ScrambleBits
