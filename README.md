@@ -1,4 +1,4 @@
-# Mil-Std-188-110
+# Mil-Std-188-110 ARCHIVED
 A recreation of the MIL-188-110 encoding scheme for HF digital data/voice transfer
 
 The encoding steps are as follows:
@@ -24,3 +24,9 @@ The C++ code, on the other hand, is not complete, will not run (yet), and could 
 -------------------------------------------------------------------------------------
 
 The standard used is available here: https://www.sigidwiki.com/images/c/c8/MIL-STD-188_110C_CHG_NOTICE-1.pdf
+
+UPDATE August 22, 2025
+I have opted to archive this repository and start again from scratch.
+I do not believe I was using git tools properly...
+And have soiled branches, and long since refactored the entire codebase at least once.
+Please refer to the new repo for the updated codebase.
